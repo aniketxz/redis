@@ -124,3 +124,13 @@ console.log(lastJob);
 	1. Job loss → once you pop a job it is lost
 	2. Retry → since job is lost you cannot retry if process failed
 	3. Parallel workers → no parallel workers
+
+
+---
+
+## 07-order-confirmation-jobs-w-bullmq
+
+1. BullMQ → Open source Message Queue for Redis. A library which helps to use redis as job queue.
+
+
+---
