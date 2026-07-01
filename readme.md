@@ -19,7 +19,9 @@ redis.del(key) // deletes the pair
 redis.exists(key) // returns if the key exists
 ```
 
+
 ---
+
 
 ## 04-otp-login-with-ttl
 
@@ -46,6 +48,9 @@ value = {
 	blockedUntil: timestamp,
 }
 ```
+
+---
+
 
 ## 05-user-profile-cache-json-v-hash
 
@@ -83,3 +88,39 @@ await redis.hdel(key, 'phone')
 // If you run HGETALL again now, 'phone' will be completely gone,
 // but 'name' and 'email' remain perfectly intact.
 ```
+
+---
+
+## 06-email-queue-w-redis-lists
+
+1. Using redis as queue in this section
+2. Queue/List commands:
+```js
+const queueKey = "my_queue";
+
+// Adding to the left
+await redis.lpush(queueKey, "Job C");
+await redis.lpush(queueKey, "Job B", "Job A"); // You can push multiple items at once
+
+// Adding to the right
+await redis.rpush(queueKey, "Job D");
+await redis.rpush(queueKey, "Job E");
+
+// Grab the item from the front of the list
+const firstJob = await redis.lpop(queueKey);
+console.log(firstJob); 
+// Output: "Job A"
+
+// Grab the item from the back of the list
+const lastJob = await redis.rpop(queueKey);
+console.log(lastJob); 
+// Output: "Job E"
+```
+
+3. lpush & rpush → adds one or multiple elements
+4. lpop & rpop → removes and return an element
+
+5. DRAWBACKS of using redis as a job queue:
+	1. Job loss → once you pop a job it is lost
+	2. Retry → since job is lost you cannot retry if process failed
+	3. Parallel workers → no parallel workers
