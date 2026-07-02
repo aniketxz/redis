@@ -7,4 +7,4 @@ const connection = {
 
 const emailQueue = new Queue('emails', { connection })
 
-module.exports = { emailQueue, connection }
+export { emailQueue, connection }

@@ -12,10 +12,10 @@ const emailWorker = new Worker(
 	{ connection },
 )
 
-worker.on('completed', (job) => {
+emailWorker.on('completed', (job) => {
 	console.log('Job completed!', job.id, job.name, job.data)
 })
 
-worker.on('failed', (job, err) => {
+emailWorker.on('failed', (job, err) => {
 	console.log('Job failed!', job.id, job.name, job.data, err)
 })
